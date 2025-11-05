@@ -6,7 +6,7 @@ private:
 	int m_ID;
 	static int m_iNextValidID;
 	void SetID(int val);
-	
+
 public:
 	BaseGameEntity(int id)
 	{
