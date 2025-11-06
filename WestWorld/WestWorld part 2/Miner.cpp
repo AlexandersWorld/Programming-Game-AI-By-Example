@@ -1,30 +1,39 @@
 #include "Miner.h"
 
 Miner::Miner(int ID)
-	: BaseGameEntity(ID)
+	: BaseGameEntity(ID),
+		m_Location(shack),
+		m_iMoneyInBank(0),
+		m_iFatigue(0),
+		m_iThirst(0)
 {
+	m_pStateMachine = new StateMachine<Miner>(this);
+	m_pStateMachine->SetCurrentState(GoHomeAndSleepTilRested::Instance());
+	m_pStateMachine->SetCurrentState(MinerGlobalState::Instance());
+}
 
+Miner::~Miner()
+{
+	delete m_pStateMachine;
+}
+
+StateMachine<Miner>* Miner::GetFSM() const
+{
+	return m_pStateMachine;
 }
 
 void Miner::Update()
 {
-	m_iThirst += 1;
+	++m_iThirst;
 
-	if (m_pCurrentState)
-	{
-		m_pCurrentState->Execute(this);
-	}
+	m_pStateMachine->Update();
 }
 
 void Miner::ChangeState(State<Miner> *pNewState)
 {
-	if (m_pCurrentState && pNewState)
+	if (m_pStateMachine && pNewState)
 	{
-		m_pCurrentState->Exit(this);
-
-		m_pCurrentState = pNewState;
-
-		m_pCurrentState->Enter(this);
+		m_pStateMachine->ChangeState(pNewState);
 	}
 }
 

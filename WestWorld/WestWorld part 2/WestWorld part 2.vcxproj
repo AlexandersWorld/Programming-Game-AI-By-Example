@@ -102,6 +102,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -125,9 +126,12 @@
   <ItemGroup>
     <ClInclude Include="BaseGameEntity.h" />
     <ClInclude Include="EnterMineAndDigForNugget.h" />
+    <ClInclude Include="GoHomeAndSleepTilRested.h" />
     <ClInclude Include="Miner.h" />
+    <ClInclude Include="MinerGlobalState.h" />
     <ClInclude Include="QuenchThirst.h" />
     <ClInclude Include="State.h" />
+    <ClInclude Include="StateMachine.h" />
     <ClInclude Include="VisitBankAndDepositGold.h" />
   </ItemGroup>
   <ItemGroup>
@@ -137,6 +141,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Miner.cpp" />
     <ClCompile Include="QuenchThirst.cpp" />
+    <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="VisitBankAndDepositGold.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
