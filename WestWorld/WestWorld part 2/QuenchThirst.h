@@ -1,16 +1,15 @@
 #pragma once
 #include "iostream"
 #include "State.h"
-#include "Miner.h"
-#include "LocationType.h"
+
+class Miner;
 
 class QuenchThirst : public State<Miner>
 {
 
-private:
+public:
 	QuenchThirst();
 
-public:
 	~QuenchThirst();
 
 	void Execute(Miner* pMiner) override;

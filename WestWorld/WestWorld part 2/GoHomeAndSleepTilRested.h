@@ -1,16 +1,14 @@
 #pragma once
 #include "iostream"
 #include "State.h"
-#include "Miner.h"
-#include "LocationType.h"
+
+class Miner;
 
 class GoHomeAndSleepTilRested : public State<Miner>
 {
-
-private:
+public:
 	GoHomeAndSleepTilRested();
 
-public:
 	~GoHomeAndSleepTilRested();
 
 	void Execute(Miner* pMiner) override;

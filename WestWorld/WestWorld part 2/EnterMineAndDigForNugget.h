@@ -1,9 +1,8 @@
 #pragma once
-
 #include "iostream"
 #include "State.h"
-#include "Miner.h"
-#include "LocationType.h"
+
+class Miner;
 
 class EnterMineAndDigForNugget : public State<Miner>
 {

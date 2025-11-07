@@ -137,11 +137,12 @@
   <ItemGroup>
     <ClCompile Include="BaseGameEntity.cpp" />
     <ClCompile Include="EnterMineAndDigForNugget.cpp" />
+    <ClCompile Include="MinerGlobalState.cpp" />
+    <ClCompile Include="GoHomeAndSleepTilRested.cpp" />
     <ClCompile Include="LocationType.h" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Miner.cpp" />
     <ClCompile Include="QuenchThirst.cpp" />
-    <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="VisitBankAndDepositGold.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
