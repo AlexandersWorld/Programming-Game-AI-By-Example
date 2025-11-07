@@ -1,5 +1,6 @@
 #include "EnterMineAndDigForNugget.h"
 #include "VisitBankAndDepositGold.h"
+#include "LocationType.h"
 #include "Miner.h"
 #include "QuenchThirst.h"
 

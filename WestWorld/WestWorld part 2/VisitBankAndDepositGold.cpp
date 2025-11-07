@@ -1,3 +1,6 @@
+#include "Miner.h"
+#include "LocationType.h"
+
 #include "VisitBankAndDepositGold.h"
 
 VisitBankAndDepositGold::~VisitBankAndDepositGold()

@@ -6,11 +6,9 @@
 
 class MinerGlobalState : public State<Miner>
 {
-
-private:
+public:
 	MinerGlobalState();
 
-public:
 	~MinerGlobalState();
 
 	void Execute(Miner* pMiner) override;

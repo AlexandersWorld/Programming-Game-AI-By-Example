@@ -19,10 +19,8 @@ private:
 	int m_iThirst;
 	int m_iFatigue;
 
-protected:
-	void Update();
-
 public:
+	void Update();
 	void ChangeState(State<Miner>* pNewState);
 	void RevertToPreviousState();
 	void IncreaseFadigue();
@@ -30,8 +28,8 @@ public:
 	bool Thirsty() const;
 	void AddToGoldCarried(int amount);
 	location_type Location() const;
-	Miner(int ID);
 	~Miner();
+	Miner(int ID);
 
 	StateMachine<Miner>* GetFSM() const;
 };

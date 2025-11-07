@@ -5,11 +5,12 @@ Miner::Miner(int ID)
 		m_Location(shack),
 		m_iMoneyInBank(0),
 		m_iFatigue(0),
-		m_iThirst(0)
+		m_iThirst(0),
+		m_iGoldCarried(0)
 {
 	m_pStateMachine = new StateMachine<Miner>(this);
 	m_pStateMachine->SetCurrentState(GoHomeAndSleepTilRested::Instance());
-	m_pStateMachine->SetCurrentState(MinerGlobalState::Instance());
+	m_pStateMachine->SetGlobalState(MinerGlobalState::Instance());
 }
 
 Miner::~Miner()
@@ -39,6 +40,7 @@ void Miner::ChangeState(State<Miner> *pNewState)
 
 void Miner::RevertToPreviousState()
 {
+	m_pStateMachine->RevertToPreviousState();
 }
 
 void Miner::AddToGoldCarried(int amount)

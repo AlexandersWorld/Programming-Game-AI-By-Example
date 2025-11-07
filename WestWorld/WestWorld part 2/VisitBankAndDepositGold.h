@@ -1,8 +1,8 @@
 #pragma once
 #include "iostream"
 #include "State.h"
-#include "Miner.h"
-#include "LocationType.h"
+
+class Miner;
 
 class VisitBankAndDepositGold : public State<Miner>
 {

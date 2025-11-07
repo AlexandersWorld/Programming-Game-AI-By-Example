@@ -1,3 +1,6 @@
+#include "Miner.h"
+#include "LocationType.h"
+
 #include "QuenchThirst.h"
 
 QuenchThirst::QuenchThirst()

@@ -65,7 +65,10 @@
     <ClCompile Include="QuenchThirst.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StateMachine.cpp">
+    <ClCompile Include="GoHomeAndSleepTilRested.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MinerGlobalState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
