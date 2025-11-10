@@ -3,9 +3,6 @@
 #include "StateMachine.h"
 #include "State.h"
 #include "LocationType.h"
-#include "GoHomeAndSleepTilRested.h"
-#include "MinerGlobalState.h"
-
 
 class Miner : public BaseGameEntity
 {
@@ -24,10 +21,12 @@ public:
 	void ChangeState(State<Miner>* pNewState);
 	void RevertToPreviousState();
 	void IncreaseFadigue();
+	void AddToGoldCarried(int amount);
 	bool PocketFull() const;
 	bool Thirsty() const;
-	void AddToGoldCarried(int amount);
+	int GetGoldAmount() const;
 	location_type Location() const;
+	void ChangeLocation(location_type location);
 	~Miner();
 	Miner(int ID);
 

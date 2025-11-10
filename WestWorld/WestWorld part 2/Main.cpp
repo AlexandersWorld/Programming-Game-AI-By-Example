@@ -2,5 +2,5 @@
 
 int main()
 {
-	Miner m(1);
+	Miner Bob(0);
 }
