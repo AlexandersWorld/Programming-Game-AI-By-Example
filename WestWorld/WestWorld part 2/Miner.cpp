@@ -1,3 +1,6 @@
+#include "EnterMineAndDigForNugget.h"
+#include "MinerGlobalState.h"
+
 #include "Miner.h"
 
 Miner::Miner(int ID)
@@ -9,8 +12,9 @@ Miner::Miner(int ID)
 		m_iGoldCarried(0)
 {
 	m_pStateMachine = new StateMachine<Miner>(this);
-	m_pStateMachine->SetCurrentState(GoHomeAndSleepTilRested::Instance());
+	m_pStateMachine->SetCurrentState(EnterMineAndDigForNugget::Instance());
 	m_pStateMachine->SetGlobalState(MinerGlobalState::Instance());
+	m_pStateMachine->Update();
 }
 
 Miner::~Miner()
@@ -25,9 +29,12 @@ StateMachine<Miner>* Miner::GetFSM() const
 
 void Miner::Update()
 {
-	++m_iThirst;
+	while (true)
+	{
+		++m_iThirst;
 
-	m_pStateMachine->Update();
+		m_pStateMachine->Update();
+	}
 }
 
 void Miner::ChangeState(State<Miner> *pNewState)
@@ -55,15 +62,25 @@ void Miner::IncreaseFadigue()
 
 bool Miner::PocketFull() const
 {
-	return m_iGoldCarried > 10.0f;
+	return m_iGoldCarried >= 2.0f;
 }
 
 bool Miner::Thirsty() const
 {
-	return m_iThirst > 10.0f;
+	return m_iThirst >= 10.0f;
+}
+
+int Miner::GetGoldAmount() const
+{
+	return m_iGoldCarried;
 }
 
 location_type Miner::Location() const
 {
 	return m_Location;
+}
+
+void Miner::ChangeLocation(location_type location)
+{
+	m_Location = location;
 }

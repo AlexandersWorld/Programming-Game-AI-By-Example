@@ -18,8 +18,7 @@ void EnterMineAndDigForNugget::Execute(Miner* pMiner)
 
 	pMiner->IncreaseFadigue();
 
-	std::cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": "
-		<< "Pikcin' up a nugget";
+	std::cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Pikcin' up a nugget";
 
 	if (pMiner->PocketFull())
 	{
@@ -30,6 +29,8 @@ void EnterMineAndDigForNugget::Execute(Miner* pMiner)
 	{
 		pMiner->ChangeState(QuenchThirst::Instance());
 	}
+
+	pMiner->Update();
 }
 
 void EnterMineAndDigForNugget::Enter(Miner* pMiner)
@@ -38,6 +39,8 @@ void EnterMineAndDigForNugget::Enter(Miner* pMiner)
 	{
 		std::cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": "
 			<< "Walking' to the gold mine";
+
+		pMiner->ChangeLocation(goldmine);
 	}
 }
 
@@ -49,7 +52,15 @@ void EnterMineAndDigForNugget::Exit(Miner* pMiner)
 
 std::string EnterMineAndDigForNugget::GetNameOfEntity(int ID)
 {
-	return std::string();
+	switch (ID)
+	{
+	case ENTITY_MINER_BOB:
+		return "Miner Bob";
+	case ENTITY_WIFE_ELSA:
+		return "Wife Elsa";
+	default:
+		return "Unkown";
+	}
 }
 
 EnterMineAndDigForNugget* EnterMineAndDigForNugget::Instance()
