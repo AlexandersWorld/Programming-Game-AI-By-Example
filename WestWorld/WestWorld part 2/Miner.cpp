@@ -29,12 +29,9 @@ StateMachine<Miner>* Miner::GetFSM() const
 
 void Miner::Update()
 {
-	while (true)
-	{
-		++m_iThirst;
+	++m_iThirst;
 
-		m_pStateMachine->Update();
-	}
+	m_pStateMachine->Update();	
 }
 
 void Miner::ChangeState(State<Miner> *pNewState)
@@ -60,6 +57,11 @@ void Miner::IncreaseFadigue()
 	m_iFatigue += 2;
 }
 
+void Miner::IncreaseThirsty()
+{
+	m_iThirst += 2;
+}
+
 bool Miner::PocketFull() const
 {
 	return m_iGoldCarried >= 2.0f;
@@ -70,9 +72,26 @@ bool Miner::Thirsty() const
 	return m_iThirst >= 10.0f;
 }
 
+bool Miner::Fadigued() const
+{
+	return m_iFatigue >= 10.0f;
+}
+
 int Miner::GetGoldAmount() const
 {
 	return m_iGoldCarried;
+}
+
+int Miner::GoldToDeposit()
+{
+	int goldToDeposit = m_iGoldCarried;
+
+	if (goldToDeposit > 0)
+	{
+		m_iGoldCarried = 0;
+
+		return goldToDeposit;
+	}
 }
 
 location_type Miner::Location() const

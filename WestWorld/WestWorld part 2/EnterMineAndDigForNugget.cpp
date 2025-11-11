@@ -1,6 +1,8 @@
 #include "EnterMineAndDigForNugget.h"
 #include "VisitBankAndDepositGold.h"
+#include "GoHomeAndSleepTilRested.h"
 #include "LocationType.h"
+#include "EntitiesEnum.h"
 #include "Miner.h"
 #include "QuenchThirst.h"
 
@@ -15,8 +17,8 @@ EnterMineAndDigForNugget::EnterMineAndDigForNugget()
 void EnterMineAndDigForNugget::Execute(Miner* pMiner)
 {
 	pMiner->AddToGoldCarried(1);
-
 	pMiner->IncreaseFadigue();
+	pMiner->IncreaseThirsty();
 
 	std::cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Pikcin' up a nugget";
 
@@ -24,10 +26,13 @@ void EnterMineAndDigForNugget::Execute(Miner* pMiner)
 	{
 		pMiner->ChangeState(VisitBankAndDepositGold::Instance());
 	}
-
-	if (pMiner->Thirsty())
+	else if (pMiner->Thirsty())
 	{
 		pMiner->ChangeState(QuenchThirst::Instance());
+	}
+	else if (pMiner->Fadigued())
+	{
+		pMiner->ChangeState(GoHomeAndSleepTilRested::Instance());
 	}
 
 	pMiner->Update();
