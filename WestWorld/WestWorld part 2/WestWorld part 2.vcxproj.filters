@@ -71,5 +71,14 @@
     <ClCompile Include="MinerGlobalState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="EntitiesEnum.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Bank.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Bank.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

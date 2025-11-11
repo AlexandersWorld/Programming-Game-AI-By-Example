@@ -3,14 +3,13 @@
 #include "State.h"
 
 class Miner;
+class Bank;
 
 class VisitBankAndDepositGold : public State<Miner>
 {
 
-private:
-	VisitBankAndDepositGold();
-
 public:
+	VisitBankAndDepositGold();
 
 	~VisitBankAndDepositGold();
 
@@ -18,6 +17,8 @@ public:
 	void Enter(Miner* pMiner) override;
 	void Exit(Miner* pMiner) override;
 	std::string GetNameOfEntity(int ID);
+
+	Bank* m_pBank = nullptr;
 
 	static VisitBankAndDepositGold* Instance();
 };

@@ -21,10 +21,13 @@ public:
 	void ChangeState(State<Miner>* pNewState);
 	void RevertToPreviousState();
 	void IncreaseFadigue();
+	void IncreaseThirsty();
 	void AddToGoldCarried(int amount);
 	bool PocketFull() const;
 	bool Thirsty() const;
+	bool Fadigued() const;
 	int GetGoldAmount() const;
+	int GoldToDeposit();
 	location_type Location() const;
 	void ChangeLocation(location_type location);
 	~Miner();

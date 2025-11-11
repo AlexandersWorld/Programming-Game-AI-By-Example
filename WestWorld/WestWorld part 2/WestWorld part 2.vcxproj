@@ -135,8 +135,11 @@
     <ClInclude Include="VisitBankAndDepositGold.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bank.cpp" />
+    <ClCompile Include="Bank.h" />
     <ClCompile Include="BaseGameEntity.cpp" />
     <ClCompile Include="EnterMineAndDigForNugget.cpp" />
+    <ClCompile Include="EntitiesEnum.h" />
     <ClCompile Include="MinerGlobalState.cpp" />
     <ClCompile Include="GoHomeAndSleepTilRested.cpp" />
     <ClCompile Include="LocationType.h" />
