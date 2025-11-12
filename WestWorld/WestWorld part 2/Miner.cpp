@@ -31,6 +31,7 @@ void Miner::Update()
 {
 	++m_iThirst;
 
+	
 	m_pStateMachine->Update();	
 }
 
@@ -69,12 +70,12 @@ bool Miner::PocketFull() const
 
 bool Miner::Thirsty() const
 {
-	return m_iThirst >= 10.0f;
+	return m_iThirst >= 4.0f;
 }
 
 bool Miner::Fadigued() const
 {
-	return m_iFatigue >= 10.0f;
+	return m_iFatigue >= 4.0f;
 }
 
 int Miner::GetGoldAmount() const

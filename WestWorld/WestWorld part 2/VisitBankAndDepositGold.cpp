@@ -23,6 +23,7 @@ void VisitBankAndDepositGold::Execute(Miner* pMiner)
 		std::cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": "
 			<< "Depositing gold." << " Total savings now: " << m_pBank->Deposit(gold);
 
+
 		pMiner->ChangeState(EnterMineAndDigForNugget::Instance());
 		pMiner->ChangeLocation(goldmine);
 	}
