@@ -132,6 +132,7 @@
     <ClInclude Include="QuenchThirst.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateMachine.h" />
+    <ClInclude Include="Telegram.h" />
     <ClInclude Include="VisitBankAndDepositGold.h" />
   </ItemGroup>
   <ItemGroup>
