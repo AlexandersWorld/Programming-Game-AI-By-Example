@@ -1,8 +1,9 @@
 #pragma once
 
-#include "BaseGameEntity.h"
-#include "Telegram.h"
+#include "../Game/BaseGameEntity.h"
 
+
+class Telegram;
 
 class Entity : public BaseGameEntity
 {
