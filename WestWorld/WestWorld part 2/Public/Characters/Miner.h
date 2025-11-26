@@ -4,6 +4,8 @@
 #include "State.h"
 #include "LocationType.h"
 
+class Telegram;
+
 class Miner : public BaseGameEntity
 {
 private:
@@ -19,6 +21,7 @@ private:
 public:
 	void Update();
 	void ChangeState(State<Miner>* pNewState);
+	virtual bool HandleMessage(const Telegram& msg);
 	void RevertToPreviousState();
 	void IncreaseFadigue();
 	void IncreaseThirsty();
