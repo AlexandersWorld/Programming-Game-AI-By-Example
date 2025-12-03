@@ -15,6 +15,7 @@ struct Vector2D
 class BaseGameEntity
 {
 public:
+	
 
 	enum { default_entity_type = -1 };
 
