@@ -36,9 +36,13 @@ private:
 	double      m_dBoundingRadius;
 
 	void SetID(int val);
+	
+	
+protected:
+	virtual void Update(time_elapse) = 0;
+	virtual void Render() = 0;
 
 public:
-
 	BaseGameEntity(const int id)
 	{
 		SetID(id);

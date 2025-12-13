@@ -1,15 +1,18 @@
-﻿#include "GameWorld.h"
+﻿#pragma once
+#include "SVector2D.h"
+#include "MovingEntity.h"
+
+class GameWorld;
 
 class Vehicle : public MovingEntity
 {
+
 private:
-    
-    //a pointer to the world data enabling a vehicle to access any obstacle
-    //path, wall, or agent data
     GameWorld* m_pWorld;
-    
-    SteeringBehaviors* m_pSteering;
-    
+
 public:
-    void Update(double time_elapsed);
+    Vehicle();
+
+    virtual void Update(double time_elapsed) override;
+    virtual void Render() override;
 };
