@@ -1,9 +1,10 @@
 ﻿
-
-
 class MovingEntity : public BaseGameEntity
 {
 public:
+    
+    virtual void Update(double time_elapsed) override;
+    virtual void Render() override;
     
 protected:
     SVector2D m_vVelocity;
@@ -11,6 +12,8 @@ protected:
     SVector2D m_vHeading;
     
     SVector2D m_vSide;
+
+    SVector2D m_vPos;
     
     double m_dMass;
     
