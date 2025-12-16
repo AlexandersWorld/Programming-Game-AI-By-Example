@@ -20,7 +20,7 @@ SVector2D SteeringBehaviors::Calculate()
 SVector2D SteeringBehaviors::Seek(const SVector2D& target)
 {
     // Desired velocity = normalize(target - position) * max_speed
-    SVector2D desired = target - m_pVehicle->m_vPos();
+    SVector2D desired = target - m_pVehicle->Pos();
     desired.Normalize();
     desired *= m_pVehicle->MaxSpeed();
 
@@ -32,14 +32,38 @@ SVector2D SteeringBehaviors::Flee(const SVector2D& TargetPos)
 {
     const double PanicDistanceSq = 100.0 * 100.0;
 
-    if (Vec2DDistance(m_pVehicle->m_vPos(), TargetPos) > PanicDistanceSq)
+    if (Vec2DDistance(m_pVehicle->Pos(), TargetPos) > PanicDistanceSq)
     {
         return Vector2D(0, 0);
     }
 
-    SVector2D DesiredVelocity = m_pVehicle->m_vPos() - TargetPos;
+    SVector2D DesiredVelocity = m_pVehicle->Pos() - TargetPos;
     DesiredVelocity.Normalize();
-    DesiredVelocity += m_pVehicle->m_dMaxSpeed();
+    DesiredVelocity += m_pVehicle->MaxSpeed();
 
     return desired - m_pVehicle->Velocity();
+}
+
+SVector2D SteeringBehaviors::Arrive(const SVector2D& TargetPos, Deceleration deceleration)
+{
+    S2Vector2D ResultVelocity = S2Vector2D(0, 0);
+
+    SVector2D ToTarget = TargetPos - m_pVehicle->Pos();
+
+    double Dist = ToTarget.Lenth();
+    
+    if (Dist > 0)
+    {
+        const double DecelerationTweaker = 0.3;
+
+        double Speed = Dist / ((double)deceleration * DecelerationTweaker);
+
+        Speed = min(Speed, m_pVehicle->MaxSpeed());
+
+        SVector2D DesiredVelocity = ToTarget * Speed / Dist;
+
+        ResultVelocity = (DesiredVelocity - m_pVehicle->Velocity());
+    }
+
+    return ResultVelocity;
 }

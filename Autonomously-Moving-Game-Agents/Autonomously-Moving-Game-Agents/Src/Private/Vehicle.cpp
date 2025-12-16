@@ -3,6 +3,11 @@
 #include "GameWorld.h"
 #include "SteeringBehaviors.h"
 
+Vehicle::Vehicle()
+{
+
+}
+
 void Vehicle::Update(double time_elapsed)
 {
 	SVector2D StreeringForce = m_pSteering->Calculate();
