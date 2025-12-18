@@ -28,27 +28,27 @@ SVector2D SteeringBehaviors::Seek(const SVector2D& target)
     return desired - m_pVehicle->Velocity();
 }
 
-SVector2D SteeringBehaviors::Flee(const SVector2D& TargetPos)
+SVector2D SteeringBehaviors::Flee(const SVector2D& targetPos)
 {
     const double PanicDistanceSq = 100.0 * 100.0;
 
-    if (Vec2DDistance(m_pVehicle->Pos(), TargetPos) > PanicDistanceSq)
+    if (Vec2DDistance(m_pVehicle->Pos(), targetPos) > PanicDistanceSq)
     {
-        return Vector2D(0, 0);
+        return SVector2D(0, 0);
     }
 
-    SVector2D DesiredVelocity = m_pVehicle->Pos() - TargetPos;
+    SVector2D DesiredVelocity = m_pVehicle->Pos() - targetPos;
     DesiredVelocity.Normalize();
     DesiredVelocity += m_pVehicle->MaxSpeed();
 
     return desired - m_pVehicle->Velocity();
 }
 
-SVector2D SteeringBehaviors::Arrive(const SVector2D& TargetPos, Deceleration deceleration)
+SVector2D SteeringBehaviors::Arrive(const SVector2D& targetPos, Deceleration deceleration)
 {
-    S2Vector2D ResultVelocity = S2Vector2D(0, 0);
+    SVector2D ResultVelocity = SVector2D(0, 0);
 
-    SVector2D ToTarget = TargetPos - m_pVehicle->Pos();
+    SVector2D ToTarget = targetPos - m_pVehicle->Pos();
 
     double Dist = ToTarget.Lenth();
     
@@ -66,4 +66,20 @@ SVector2D SteeringBehaviors::Arrive(const SVector2D& TargetPos, Deceleration dec
     }
 
     return ResultVelocity;
+}
+
+SVector2D SteeringBehaviors::Pursuit(const Vehicle* evader)
+{
+    SVector2D ToEvader = evader->Pos() - m_pVehicle->Pos();
+
+    double RelativeHeading = m_pVehicle->Heading().Dot(evader->Heading());
+
+    if (ToEvader.Dot(m_pVehicle->Heading() > 0 && RelativeHeading < -0.95) //acos(0.95)=18 degs
+    {
+        return Seek(evader->Pos());
+    }
+
+    double LookAheadTime = ToEvader.Length() / (m_pVehicle->MaxSpeed() + evader->Speed());
+
+    return Seek(evader->Pos() + evader->Velocity() * LookAheadTime);
 }

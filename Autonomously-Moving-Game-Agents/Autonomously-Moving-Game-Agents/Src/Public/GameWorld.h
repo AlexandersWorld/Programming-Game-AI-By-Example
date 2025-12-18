@@ -2,6 +2,16 @@
 #include <vector>
 #include "Vehicle.h"
 
+struct SVector2D
+{
+    x, y;
+
+    SVector2D Dot(SVector2D& target)
+    {
+        return SVector2D(0, 0);
+    }
+};
+
 class GameWorld
 {
 private:
