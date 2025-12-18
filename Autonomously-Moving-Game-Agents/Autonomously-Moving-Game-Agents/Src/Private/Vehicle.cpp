@@ -1,6 +1,5 @@
 #include "Vehicle.h"
 #include "SVector2D.h"
-#include "GameWorld.h"
 #include "SteeringBehaviors.h"
 
 Vehicle::Vehicle()

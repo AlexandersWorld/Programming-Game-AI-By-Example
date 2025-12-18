@@ -1,6 +1,6 @@
 ﻿#pragma once
-#include "SVector2D.h"
 #include "MovingEntity.h"
+#include "GameWorld.h"
 
 class GameWorld;
 
@@ -13,9 +13,12 @@ private:
 public:
     Vehicle();
 
-    SVector2D Pos { return m_vPos; }
-    SVector2D Velocity { return m_vVelocity; }
-    double MaxSpeed { return m_dMaxSpeed; }
+    SVector2D Pos() { return m_vPos; }
+    SVector2D Velocity() { return m_vVelocity; }
+    SVector2D Heading() { return m_vHeading; }
+    
+    double MaxSpeed() { return m_dMaxSpeed; }
+    double Speed() { return m_dSPeed; }
 
 
     virtual void Update(double time_elapsed) override;

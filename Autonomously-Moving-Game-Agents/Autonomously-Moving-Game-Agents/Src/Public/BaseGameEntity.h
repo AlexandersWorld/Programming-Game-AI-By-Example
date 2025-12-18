@@ -1,6 +1,4 @@
-#ifndef BASEGAMEENTITY_H
-#define BASEGAMEENTITY_H
-#pragma warning (disable:4786)
+#pragma once
 
 #include <vector>
 #include <string>

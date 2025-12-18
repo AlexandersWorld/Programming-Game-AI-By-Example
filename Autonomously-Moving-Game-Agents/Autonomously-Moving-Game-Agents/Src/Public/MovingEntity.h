@@ -1,4 +1,8 @@
 ﻿
+#pragma once
+#include "GameWorld.h"
+#include "BaseGameEntity.h"
+
 class MovingEntity : public BaseGameEntity
 {
 public:
@@ -18,6 +22,8 @@ protected:
     double m_dMass;
     
     double m_dMaxSpeed;
+
+    double m_dSpeed;
     
     double m_dMaxForce;
     
