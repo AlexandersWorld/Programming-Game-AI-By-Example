@@ -91,7 +91,7 @@ SVector2D SteeringBehaviors::Pursuit(const Vehicle* Evader)
     return Seek(evader->Pos() + evader->Velocity() * LookAheadTime);
 }
 
-double SteeringBehaviors::TurnaoundTime(const Vehicle* pAgent, SVector2D TargetPos)
+double SteeringBehaviors::TurnaroundTime(const Vehicle* pAgent, SVector2D TargetPos)
 {
     SVector2D ToTarget = SVector2D(TargetPos - pAgent->Pos()).Normalize();
 
