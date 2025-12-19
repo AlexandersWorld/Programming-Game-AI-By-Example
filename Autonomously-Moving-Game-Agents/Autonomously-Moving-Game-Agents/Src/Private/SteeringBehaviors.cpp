@@ -3,8 +3,8 @@
 #include <cmath>
 
 // Constructor: store vehicle pointer
-SteeringBehaviors::SteeringBehaviors(Vehicle* owner)
-    : m_pVehicle(owner)
+SteeringBehaviors::SteeringBehaviors(Vehicle* Owner)
+    : m_pVehicle(Owner)
 {
 }
 
@@ -17,10 +17,10 @@ SVector2D SteeringBehaviors::Calculate()
     return Seek(target);
 }
 
-SVector2D SteeringBehaviors::Seek(const SVector2D& target)
+SVector2D SteeringBehaviors::Seek(const SVector2D& Target)
 {
     // Desired velocity = normalize(target - position) * max_speed
-    SVector2D desired = target - m_pVehicle->Pos();
+    SVector2D desired = Target - m_pVehicle->Pos();
     desired.Normalize();
     desired *= m_pVehicle->MaxSpeed();
 
@@ -28,27 +28,34 @@ SVector2D SteeringBehaviors::Seek(const SVector2D& target)
     return desired - m_pVehicle->Velocity();
 }
 
-SVector2D SteeringBehaviors::Flee(const SVector2D& targetPos)
+SVector2D SteeringBehaviors::Flee(const SVector2D& TargetPos)
 {
     const double PanicDistanceSq = 100.0 * 100.0;
 
-    if (Vec2DDistance(m_pVehicle->Pos(), targetPos) > PanicDistanceSq)
+    // Calculate squared distance to avoid sqrt for performance
+    float distSq = SVector2D::DistanceSquared(m_pVehicle->Pos(), TargetPos);
+
+    if (distSq > PanicDistanceSq)
     {
-        return SVector2D(0, 0);
+        return SVector2D(0, 0);  // No fleeing if too far away
     }
 
-    SVector2D DesiredVelocity = m_pVehicle->Pos() - targetPos;
+    // Calculate desired velocity AWAY from target
+    SVector2D DesiredVelocity = m_pVehicle->Pos() - TargetPos;
     DesiredVelocity.Normalize();
-    DesiredVelocity += m_pVehicle->MaxSpeed();
 
-    return desired - m_pVehicle->Velocity();
+    // Scale by max speed (not add!)
+    DesiredVelocity = DesiredVelocity * m_pVehicle->MaxSpeed();
+
+    // Return steering force = desired - current
+    return DesiredVelocity - m_pVehicle->Velocity();
 }
 
-SVector2D SteeringBehaviors::Arrive(const SVector2D& targetPos, Deceleration deceleration)
+SVector2D SteeringBehaviors::Arrive(const SVector2D& TargetPos, EDeceleration Deceleration)
 {
     SVector2D ResultVelocity = SVector2D(0, 0);
 
-    SVector2D ToTarget = targetPos - m_pVehicle->Pos();
+    SVector2D ToTarget = TargetPos - m_pVehicle->Pos();
 
     double Dist = ToTarget.Lenth();
     
@@ -56,7 +63,7 @@ SVector2D SteeringBehaviors::Arrive(const SVector2D& targetPos, Deceleration dec
     {
         const double DecelerationTweaker = 0.3;
 
-        double Speed = Dist / ((double)deceleration * DecelerationTweaker);
+        double Speed = Dist / ((double)Deceleration * DecelerationTweaker);
 
         Speed = min(Speed, m_pVehicle->MaxSpeed());
 
@@ -68,18 +75,46 @@ SVector2D SteeringBehaviors::Arrive(const SVector2D& targetPos, Deceleration dec
     return ResultVelocity;
 }
 
-SVector2D SteeringBehaviors::Pursuit(const Vehicle* evader)
+SVector2D SteeringBehaviors::Pursuit(const Vehicle* Evader)
 {
-    SVector2D ToEvader = evader->Pos() - m_pVehicle->Pos();
+    SVector2D ToEvader = Evader->Pos() - m_pVehicle->Pos();
 
-    double RelativeHeading = m_pVehicle->Heading().Dot(evader->Heading());
+    double RelativeHeading = m_pVehicle->Heading().Dot(Evader->Heading());
 
     if (ToEvader.Dot(m_pVehicle->Heading() > 0 && RelativeHeading < -0.95) //acos(0.95)=18 degs
     {
-        return Seek(evader->Pos());
+        return Seek(Evader->Pos());
     }
 
     double LookAheadTime = ToEvader.Length() / (m_pVehicle->MaxSpeed() + evader->Speed());
 
     return Seek(evader->Pos() + evader->Velocity() * LookAheadTime);
+}
+
+double SteeringBehaviors::TurnaroundTime(const Vehicle* pAgent, SVector2D TargetPos)
+{
+    SVector2D ToTarget = SVector2D(TargetPos - pAgent->Pos()).Normalize();
+
+    double dot = pAgent->Heading().Dot(ToTarget);
+
+    const double coefficient = 0.5;
+
+    //the dot product gives a value of 1 if the target is directly ahead and -1
+    //if it is directly behind. Substracting 1 and multiplying by the negative of
+    //the coefficient gives a positive value proportional to the rotational
+    //displacement of the vehiucle and target.
+    return (dot - 1.0) * -coefficient;
+}
+
+SVector2D SteeringBehaviors::Evade(const Vehicle* pursuer)
+{
+    SVector2D ToPursuer = pursuer->Pos() - m_pVehicle->Pos();
+
+    //the look-ahead time is proportional to the distance between the pursuer
+    //and the evader; and is inversely proportional to the sum of the agents' velocities
+
+    double LookAheadTime = ToPursuer.Length() / (m_pVehicle->MaxSpeed() + pursuer->Speed());
+
+    //now flee away from predicted future position of the pursuer
+    return Flee(pursuer->Pos() + pursuer->Velocity() * LookAheadTime);
 }

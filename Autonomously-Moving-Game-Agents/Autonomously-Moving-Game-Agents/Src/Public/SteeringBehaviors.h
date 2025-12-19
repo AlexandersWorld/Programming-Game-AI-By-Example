@@ -1,7 +1,7 @@
 #pragma once
 #include "GameWorld.h"
 
-enum Deceleration { Slow = 3, Normal = 2, Fast = 1 };
+enum EDeceleration { Slow = 3, Normal = 2, Fast = 1 };
 
 class Vehicle;
 
@@ -17,11 +17,15 @@ public:
     SVector2D Calculate();
 
     // Seek behavior
-    SVector2D Seek(const SVector2D& target);
+    SVector2D Seek(const SVector2D& Target);
 
     SVector2D Flee(const SVector2D& TargetPos);
     
-    SVector2D Pursuit(const Vehicle* evader);
+    SVector2D Pursuit(const Vehicle* Evader);
 
-    SVector2D Arrive(const SVector2D& TargetPos, Deceleration deceleration);
+    SVector2D Arrive(const SVector2D& TargetPos, EDeceleration Deceleration);
+
+    double TurnaoundTime(const Vehicle* pAgent, SVector2D TargetPos);
+
+    SVector2D SteeringBehaviors::Evade(const Vehicle* pursuer);
 };
