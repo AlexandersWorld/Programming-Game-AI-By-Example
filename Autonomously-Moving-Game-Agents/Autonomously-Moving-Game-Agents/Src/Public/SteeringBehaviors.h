@@ -1,5 +1,7 @@
 #pragma once
 #include "GameWorld.h"
+#include <random>
+#include <chrono>
 
 enum EDeceleration { Slow = 3, Normal = 2, Fast = 1 };
 
@@ -9,9 +11,18 @@ class SteeringBehaviors
 {
 private:
     Vehicle* m_pVehicle; // Owner vehicle
+    double m_dWanderRadius;
+    double m_dWanderDistance;
+    double m_dWanderJitter;
+    SVector2D m_vWanderTarget;
 
-public:
+    mutable std::mt19937 m_RNG;
+    mutable std::uniform_real_distribution<double> m_Distribution;
+
+protected:
     SteeringBehaviors(Vehicle* owner);
+    SteeringBehaviors();
+
 
     // Main steering force calculation
     SVector2D Calculate();
@@ -27,5 +38,12 @@ public:
 
     double TurnaoundTime(const Vehicle* pAgent, SVector2D TargetPos);
 
-    SVector2D SteeringBehaviors::Evade(const Vehicle* pursuer);
+    SVector2D Evade(const Vehicle* pursuer);
+
+    SVector2D Wander();
+
+    double RandomClamped() const
+    {
+        return m_Distribution(m_RNG);
+    }
 };

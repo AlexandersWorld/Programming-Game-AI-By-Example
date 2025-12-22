@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <iostream>
 #include <vector>
 #include "Vehicle.h"
 #include <cmath>
@@ -104,4 +105,5 @@ public:
 
     // Getter for Vehicles (used by SteeringBehaviors)
     const std::vector<Vehicle*>& GetVehicles() const { return m_Vehicles; }
+
 };

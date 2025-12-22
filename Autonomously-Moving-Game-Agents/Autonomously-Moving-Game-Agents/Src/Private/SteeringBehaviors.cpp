@@ -8,6 +8,12 @@ SteeringBehaviors::SteeringBehaviors(Vehicle* Owner)
 {
 }
 
+SteeringBehaviors::SteeringBehaviors()
+{
+    std::random_device rd;
+    m_RNG.seed(rd());
+}
+
 SVector2D SteeringBehaviors::Calculate()
 {
     // EXAMPLE: only using Seek for now
@@ -116,5 +122,23 @@ SVector2D SteeringBehaviors::Evade(const Vehicle* pursuer)
     double LookAheadTime = ToPursuer.Length() / (m_pVehicle->MaxSpeed() + pursuer->Speed());
 
     //now flee away from predicted future position of the pursuer
+    return Flee(pursuer->Pos() + pursuer->Velocity() * LookAheadTime);
+}
+
+SVector2D SteeringBehaviors::Wander()
+{
+    //first, add a small random vector to the target's position (RandomClamped
+    //return a value between -1 and 1)
+    m_vWanderTarget += SVector2D(RandomClamped() * m_dWanderJitter, RandomClamped() * m_dWanderJitter);
+    m_vWanderTarget.Normalize();
+
+    //increase the length of the vector to the same as the radius
+    //of the wander circle
+    m_vWanderTarget *= m_dWanderRadius;
+    
+    //move the target into a position WanderDist in front of the agent
+    SVector2D targetLocal = m_vWanterTarget + SVector2D(m_dWanderDistance, 0);
+
+
     return Flee(pursuer->Pos() + pursuer->Velocity() * LookAheadTime);
 }
