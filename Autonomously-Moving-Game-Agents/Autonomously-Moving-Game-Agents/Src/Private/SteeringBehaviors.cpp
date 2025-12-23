@@ -139,6 +139,22 @@ SVector2D SteeringBehaviors::Wander()
     //move the target into a position WanderDist in front of the agent
     SVector2D targetLocal = m_vWanterTarget + SVector2D(m_dWanderDistance, 0);
 
+    //project the target into world space
+    SVector2D targetWorld = PointToWorldSpace(targetLocal, m_pVehicle->Heading(), m_pVehicle->Side(), m_pVehicle->Pos());
 
-    return Flee(pursuer->Pos() + pursuer->Velocity() * LookAheadTime);
+
+    return targetWorld - m_pVehicle->Pos();
+}
+
+SVector2D SteeringBehaviors::PointToWorldSpace(SVector2D targetLocal, SVector2D VehicleHeading, SVector2D VehicleSide, SVector2D VehiclePos)
+{
+    SVector2D worldPoint;
+
+    worldPoint.x = (VehicleHeading.x * targetLocal.x) + (VehicleSide.x * targetLocal.y);
+
+    worldPoint.y = (VehicleHeading.y * targetLocal.x) + (VehicleSide.y * targetLocal.y);
+
+    worldPoint += VehiclePos;
+
+    return worldPoint;
 }

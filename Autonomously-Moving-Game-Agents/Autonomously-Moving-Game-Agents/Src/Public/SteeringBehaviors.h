@@ -46,4 +46,6 @@ protected:
     {
         return m_Distribution(m_RNG);
     }
+
+    SVector2D PointToWorldSpace(SVector2D targetLocal, SVector2D VehicleHeading, SVector2D VehicleSide, SVector2D VehiclePos);
 };
