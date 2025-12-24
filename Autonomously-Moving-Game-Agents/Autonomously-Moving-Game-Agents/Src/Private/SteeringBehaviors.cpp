@@ -1,5 +1,6 @@
 #include "SteeringBehaviors.h"
 #include "Vehicle.h"
+#include "Params.h"
 #include <cmath>
 
 // Constructor: store vehicle pointer
@@ -142,7 +143,6 @@ SVector2D SteeringBehaviors::Wander()
     //project the target into world space
     SVector2D targetWorld = PointToWorldSpace(targetLocal, m_pVehicle->Heading(), m_pVehicle->Side(), m_pVehicle->Pos());
 
-
     return targetWorld - m_pVehicle->Pos();
 }
 
@@ -157,4 +157,10 @@ SVector2D SteeringBehaviors::PointToWorldSpace(SVector2D targetLocal, SVector2D 
     worldPoint += VehiclePos;
 
     return worldPoint;
+}
+
+SVector2D SteeringBehaviors::ObstacleAvoidance(const std::vector<BaseGameEntity*>& obstacles)
+{
+    //the detection box length is proportional to the agent's velocity
+    m_dDBoxLength = Prm.MinDetectionBoxLength + (m_pVehicle->Speed() / m_pVehicle->MaxSpeed()) * Prm.MinDetectionBoxLength;
 }
