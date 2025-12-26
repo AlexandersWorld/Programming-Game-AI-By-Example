@@ -17,6 +17,7 @@ public:
     SVector2D Velocity() { return m_vVelocity; }
     SVector2D Heading() { return m_vHeading; }
     SVector2D Side() { return m_vSide; }
+    GameWorld* World() { return m_pWorld; }
     
     double MaxSpeed() { return m_dMaxSpeed; }
     double Speed() { return m_dSPeed; }
