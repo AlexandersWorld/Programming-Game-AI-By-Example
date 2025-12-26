@@ -12,10 +12,12 @@ class SteeringBehaviors
 {
 private:
     Vehicle* m_pVehicle; // Owner vehicle
+    
     double m_dWanderRadius;
     double m_dWanderDistance;
     double m_dWanderJitter;
     double m_dDBoxLength;
+    double MaxDouble;
     SVector2D m_vWanderTarget;
 
     mutable std::mt19937 m_RNG;

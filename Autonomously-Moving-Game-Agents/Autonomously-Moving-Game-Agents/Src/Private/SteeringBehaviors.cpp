@@ -163,4 +163,84 @@ SVector2D SteeringBehaviors::ObstacleAvoidance(const std::vector<BaseGameEntity*
 {
     //the detection box length is proportional to the agent's velocity
     m_dDBoxLength = Prm.MinDetectionBoxLength + (m_pVehicle->Speed() / m_pVehicle->MaxSpeed()) * Prm.MinDetectionBoxLength;
+
+    m_pVehicle->World()->TagObstaclesWithinViewRange(m_pVehicle, m_dDBoxLength);
+
+    BaseGameEntity* ClosesIntersectingObstacle = nullptr;
+
+    double DistToClosestIP = MaxDouble;
+
+    SVector2D LocalPosOfClosestObstacle;
+
+    std::vector<BaseGameEntity*>::const_iterator curOb = obstacles.begin();
+
+    while (curOb != obstacles.end())
+    {
+        //if the obstacle has been tagged within ranged proceed
+        if ((*curOb)->IsTagged())
+        {
+            SVector2D LocalPos = PointToLocalSpace((*curOb)->Pos(), m_pVehicle->Heading(), m_pVehicle->Side(), m_pVehicle->Pos());
+
+            if (LocalPos.x >= 0)
+            {
+                //if the distance from the x axis to the object's position is less
+                //than its radius + half the width of the detection box then there
+                //is a potential intersection.
+                double ExpandedRadius = (*curOb)->BRadius() + m_pVehicle->BRadius();
+
+                if (fabs(LocalPos.y) < ExpandedRadius)
+                {
+                    //now to do a  line/circle intersection test. The center of the
+                    //circle is represented by (cX, cY). The intersection points are
+                    //given by the formula x = cX +/-sqrt(r^2 - cY^2) for y=0.
+                    //We only need to look at the smallest positive value of x because
+                    //that will be the closest point of intersection.
+                    double cX = LocalPos.x;
+                    double cY = LocalPos.y;
+
+                    //we only need to calculate the sqrt part of the above equation once
+                    double SqrtPart = sqrt(ExpandedRadius * ExpandedRadius - cY * cY);
+
+                    double ip = A - SqrtPart;
+
+                    if (ip <= 0)
+                    {
+                        ip = A + SqrtPart;
+                    }
+
+                    //test to see if this is the closest so far. If it is, keep a
+                    //record of the obstacle and its local coordinates
+                    if (ip < DistToClosestIP)
+                    {
+                        DistToClosestIP = ip;
+
+                        ClosesIntersectingObstacle = *curOb;
+                        LocalPosOfClosestObstacle = LocalPos;
+                    }
+                }
+            }
+        }
+        ++curOb;
+    }
+
+    //if we have found an intersecting obstacle, calculate a steering
+    //force away from it
+    SVector2D SteeringForce;
+
+    if (ClosesIntersectingObstacle)
+    {
+        //the closer the agent is to an object, the stronger the steering force should be
+        double multiplier = 1.0 + (m_dDBoxLength - LocalPosOfClosestObstacle.x) / m_dDBoxLength;
+
+        //calculate the lateral force
+        SteeringForce.y = (ClosesIntersectingObstacle->BRadius() - LocalPosOfClosestObstacle.y) * multiplier;
+
+        //apply a braking force proportional to the obstacle's distance from the vehicle.
+        const double BrakingWeght = 0.2;
+
+        SteeringForce.x = (ClosesIntersectingObstacle->BRadius() - LocalPosOfClosestObstacle.x) * BrakingWeght;
+    }
+
+    //finally, convert the steering vector  from local to world space
+    return VectorToWorldSpace(SteeringForce, m_pVehicle->Heading(), m_pVehicle->Side());
 }

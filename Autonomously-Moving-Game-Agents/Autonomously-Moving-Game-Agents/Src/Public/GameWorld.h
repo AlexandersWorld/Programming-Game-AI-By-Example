@@ -79,6 +79,11 @@ struct SVector2D
         return SVector2D(x * scalar, y * scalar);
     }
 
+    void TagObstaclesWithinViewRange(Vehicle& vehicle, double boxLength)
+    {
+
+    }
+
     // Note: There's a bug in your Flee function - you can't add a scalar to a vector
     // MaxSpeed should multiply the normalized vector, not be added to it
 };
