@@ -7,6 +7,7 @@ enum EDeceleration { Slow = 3, Normal = 2, Fast = 1 };
 
 class Vehicle;
 class BaseGameEntity;
+class Wall2D;
 
 class SteeringBehaviors
 {
@@ -18,6 +19,7 @@ private:
     double m_dWanderJitter;
     double m_dDBoxLength;
     double MaxDouble;
+    std::vector<Wall2D> m_Feelers;
     SVector2D m_vWanderTarget;
 
     mutable std::mt19937 m_RNG;
@@ -54,4 +56,8 @@ protected:
     SVector2D PointToWorldSpace(SVector2D targetLocal, SVector2D VehicleHeading, SVector2D VehicleSide, SVector2D VehiclePos);
 
     SVector2D ObstacleAvoidance(const std::vector<BaseGameEntity*>& obstacles);
+
+    VectorToWorldSpac(SVector2D SterringForce, SVector2D Heading, SVector2D Side);
+
+    Vector2D SteeringBehaviors::WallAvoidance(const std::vector<Wall2D>& walls);
 };
