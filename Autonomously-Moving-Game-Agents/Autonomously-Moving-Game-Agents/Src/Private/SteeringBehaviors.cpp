@@ -1,7 +1,10 @@
+#include <vector>
+#include <iostream>
+#include <cmath>
 #include "SteeringBehaviors.h"
 #include "Vehicle.h"
+#include "Wall2D.h"
 #include "Params.h"
-#include <cmath>
 
 // Constructor: store vehicle pointer
 SteeringBehaviors::SteeringBehaviors(Vehicle* Owner)
@@ -159,6 +162,11 @@ SVector2D SteeringBehaviors::PointToWorldSpace(SVector2D targetLocal, SVector2D 
     return worldPoint;
 }
 
+SVector2D SteeringBehaviors::VectorToWorldSpac(SVector2D SterringForce, SVector2D Heading, SVector2D Side)
+{
+
+}
+
 SVector2D SteeringBehaviors::ObstacleAvoidance(const std::vector<BaseGameEntity*>& obstacles)
 {
     //the detection box length is proportional to the agent's velocity
@@ -243,4 +251,56 @@ SVector2D SteeringBehaviors::ObstacleAvoidance(const std::vector<BaseGameEntity*
 
     //finally, convert the steering vector  from local to world space
     return VectorToWorldSpace(SteeringForce, m_pVehicle->Heading(), m_pVehicle->Side());
+}
+
+Vector2D SteeringBehaviors::WallAvoidance(const std::vector<Wall2D>& walls)
+{
+    //the feelers are contained in a std::vector, m_Feelers
+    CreateFeelers();
+
+    double DistToThisIP = 0.0;
+    double DistToClosestIP = MaxDouble;
+
+    //this will hold an index into the vector of walls
+    int ClosestWall = -1;
+
+    SVector2D SteeringForce, 
+        point, //used for storing temporary info 
+        ClosestPoint; //holds the closest intersection point
+
+    //examine each feeler in turn
+    for (int flr = 0; flr < m_Feelers.size(); ++flr)
+    {
+        //run through each wall checing for any intersection points
+        for (int w = 0; w < walls.size(); ++w)
+        {
+            if (LineIntersection2D(m_pVehicle->Pos(), m_Feelers[flr], walls[w].From(), walls[w].To(), DistToThisIP, point))
+            {
+                //is this the closest found so far? If so keep a record
+                if (DistToThisIP < DistToClosestIP)
+                {
+                    DistToClosestIP = DistToThisIP;
+
+                    ClosestWall = w;
+
+                    ClosestPoint = point;
+                }
+            }
+        } //next wall
+
+        //if an intersection point has been detected, calculate a force
+        //that will direct the agent away
+        if (ClosestWall >= 0)
+        {
+            //calculate by what distance the projected position of the agent
+            //will overshoot the wall
+            SVector2D OverShoot = m_Feelers[flr] - ClosestPoint;
+
+            //create a force in the direction of the wall normal, with a magnitude of the overshoot
+            SteeringForce = walls[ClosestWall].Normal() * OverShoot.Length();
+
+        }
+    } // next feeler
+
+    return SteeringForce;
 }
