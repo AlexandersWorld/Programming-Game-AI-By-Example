@@ -162,7 +162,7 @@ SVector2D SteeringBehaviors::PointToWorldSpace(SVector2D targetLocal, SVector2D 
     return worldPoint;
 }
 
-SVector2D SteeringBehaviors::VectorToWorldSpac(SVector2D SterringForce, SVector2D Heading, SVector2D Side)
+SVector2D SteeringBehaviors::VectorToWorldSpace(SVector2D SterringForce, SVector2D Heading, SVector2D Side)
 {
 
 }

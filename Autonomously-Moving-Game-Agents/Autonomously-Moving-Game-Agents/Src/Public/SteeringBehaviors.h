@@ -57,7 +57,7 @@ protected:
 
     SVector2D ObstacleAvoidance(const std::vector<BaseGameEntity*>& obstacles);
 
-    VectorToWorldSpac(SVector2D SterringForce, SVector2D Heading, SVector2D Side);
+    VectorToWorldSpace(SVector2D SterringForce, SVector2D Heading, SVector2D Side);
 
     Vector2D SteeringBehaviors::WallAvoidance(const std::vector<Wall2D>& walls);
 };
