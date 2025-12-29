@@ -253,7 +253,7 @@ SVector2D SteeringBehaviors::ObstacleAvoidance(const std::vector<BaseGameEntity*
     return VectorToWorldSpace(SteeringForce, m_pVehicle->Heading(), m_pVehicle->Side());
 }
 
-Vector2D SteeringBehaviors::WallAvoidance(const std::vector<Wall2D>& walls)
+SVector2D SteeringBehaviors::WallAvoidance(const std::vector<Wall2D>& walls)
 {
     //the feelers are contained in a std::vector, m_Feelers
     CreateFeelers();
@@ -303,4 +303,9 @@ Vector2D SteeringBehaviors::WallAvoidance(const std::vector<Wall2D>& walls)
     } // next feeler
 
     return SteeringForce;
+}
+
+SVector2D SteeringBehavior::Interpose(const Vehicle* AgentA, const Vehicle* AgentB)
+{
+
 }
