@@ -59,5 +59,7 @@ protected:
 
     VectorToWorldSpace(SVector2D SterringForce, SVector2D Heading, SVector2D Side);
 
-    Vector2D SteeringBehaviors::WallAvoidance(const std::vector<Wall2D>& walls);
+    SVector2D SteeringBehaviors::WallAvoidance(const std::vector<Wall2D>& walls);
+
+    SVector2D Interpose(const Vehicle* AgentA, const Vehicle* AgentB);
 };
