@@ -57,9 +57,13 @@ protected:
 
     SVector2D ObstacleAvoidance(const std::vector<BaseGameEntity*>& obstacles);
 
-    VectorToWorldSpace(SVector2D SterringForce, SVector2D Heading, SVector2D Side);
+    SVector2D VectorToWorldSpace(SVector2D SterringForce, SVector2D Heading, SVector2D Side);
 
-    SVector2D SteeringBehaviors::WallAvoidance(const std::vector<Wall2D>& walls);
+    SVector2D WallAvoidance(const std::vector<Wall2D>& walls);
 
     SVector2D Interpose(const Vehicle* AgentA, const Vehicle* AgentB);
+
+    SVector2D GetHidingPosition(const SVector2D& posOb, const double radiusOb, const SVector2D& posTarget);
+
+    SVector2D Hide(const Vehicle* target, vector<BaseGameEntity*>& obstacles);
 };
