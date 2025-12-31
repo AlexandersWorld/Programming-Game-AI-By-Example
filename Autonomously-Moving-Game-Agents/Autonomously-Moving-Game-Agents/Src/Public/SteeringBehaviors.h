@@ -1,5 +1,4 @@
 #pragma once
-#include "GameWorld.h"
 #include <random>
 #include <chrono>
 
@@ -8,6 +7,7 @@ enum EDeceleration { Slow = 3, Normal = 2, Fast = 1 };
 class Vehicle;
 class BaseGameEntity;
 class Wall2D;
+class Path;
 
 class SteeringBehaviors
 {
@@ -19,6 +19,7 @@ private:
     double m_dWanderJitter;
     double m_dDBoxLength;
     double MaxDouble;
+    Path m_pPath;
     std::vector<Wall2D> m_Feelers;
     SVector2D m_vWanderTarget;
 
@@ -66,4 +67,6 @@ protected:
     SVector2D GetHidingPosition(const SVector2D& posOb, const double radiusOb, const SVector2D& posTarget);
 
     SVector2D Hide(const Vehicle* target, vector<BaseGameEntity*>& obstacles);
+
+    SVector2D FollowPath();
 };
