@@ -1,9 +1,11 @@
 #include <vector>
 #include <iostream>
 #include <cmath>
+#include "Path.h"
 #include "SteeringBehaviors.h"
 #include "Vehicle.h"
 #include "Wall2D.h"
+#include "Vector2D.h"
 #include "Params.h"
 
 // Constructor: store vehicle pointer
@@ -84,6 +86,11 @@ SVector2D SteeringBehaviors::Arrive(const SVector2D& TargetPos, EDeceleration De
     }
 
     return ResultVelocity;
+}
+
+double SteeringBehaviors::TurnaoundTime(const Vehicle* pAgent, SVector2D TargetPos)
+{
+    return 0.0;
 }
 
 SVector2D SteeringBehaviors::Pursuit(const Vehicle* Evader)
@@ -377,4 +384,23 @@ SVector2D SteeringBehaviors::Hide(const Vehicle* target, vector<BaseGameEntity*>
     }
 
     return Arrive(BestHidingSpot, EDeceleration::Fast);
+}
+
+SVector2D SteeringBehaviors::FollowPath()
+{
+    //move to next target if close enough to current target (working in distance squared space)
+    if (SVector2D::DistanceSquared(m_pPath->CurrentWaypoint(), m_pVehicle->Pos()) < m_WaypointSeekDistSq)
+    {
+        m_pPath->SetNetWaypoint();
+    }
+    if (!m_pPath->Finished())
+    {
+        return Seek(m_pPath->CurrentWaypoint());
+    }
+    else
+    {
+        return Arrive(m_pPath->CurrentWaypoint(), EDeceleration::Normal);
+    }
+
+    return SVector2D();
 }
