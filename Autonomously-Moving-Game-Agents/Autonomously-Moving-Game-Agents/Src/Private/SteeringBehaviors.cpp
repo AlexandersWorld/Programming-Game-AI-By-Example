@@ -391,7 +391,7 @@ SVector2D SteeringBehaviors::FollowPath()
     //move to next target if close enough to current target (working in distance squared space)
     if (SVector2D::DistanceSquared(m_pPath->CurrentWaypoint(), m_pVehicle->Pos()) < m_WaypointSeekDistSq)
     {
-        m_pPath->SetNetWaypoint();
+        m_pPath->SetNextWaypoint();
     }
     if (!m_pPath->Finished())
     {
@@ -403,4 +403,20 @@ SVector2D SteeringBehaviors::FollowPath()
     }
 
     return SVector2D();
+}
+
+SVector2D SteeringBehaviors::OffsetPursuit(const Vehicle* leader, const SVector2D offset)
+{
+    //calculate the offset's position in the world space
+    SVector2D WorldOffsetPos = PointToWorldSpace(offset, leader->Heading(), leader->Side(), leader->Pos());
+
+    SVector2D ToOffset = WorldOffsetPos - m_pVehicle->Pos();
+
+    //the look-ahead time is proportional to the distance between the leader
+    //and the pursuer; and is inversely proportional to the sum of both
+    //agent's velocities
+    double LookAheadTime = ToOffset.Length() / (m_pVehicle->MaxSpeed() + leader->Speed());
+
+    //now arrive at the predicted future position of the offset
+    return Arrive(WorldOffsetPos + leader->Velocity() * LookAheadTime, EDeceleration::Fast);
 }
