@@ -19,7 +19,7 @@ private:
     double m_dWanderJitter;
     double m_dDBoxLength;
     double MaxDouble;
-    Path m_pPath;
+    Path* m_pPath;
     std::vector<Wall2D> m_Feelers;
     SVector2D m_vWanderTarget;
 
@@ -69,4 +69,6 @@ protected:
     SVector2D Hide(const Vehicle* target, vector<BaseGameEntity*>& obstacles);
 
     SVector2D FollowPath();
+
+    SVector2D OffsetPursuit(const Vehicle* leader, const SVector2D offset);
 };

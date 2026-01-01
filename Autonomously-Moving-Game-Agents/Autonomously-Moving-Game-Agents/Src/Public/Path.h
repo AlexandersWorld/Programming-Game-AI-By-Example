@@ -16,18 +16,20 @@ public:
 
 
 	SVector2D CurrentWaypoint() const { assert(curWaypoint != NULL); return *curWaypoint; }
-};
 
-
-inline void Path::SetNextWaypoint()
-{
-	assert(m_WayPoints.size() > 0);
-
-	if (++curWaypoint == m_WayPoints.end())
+	inline void Path::SetNextWaypoint()
 	{
-		if (m_bLooped)
+		assert(m_WayPoints.size() > 0);
+
+		if (++curWaypoint == m_WayPoints.end())
 		{
-			curWaypoint = m_WayPoints.begin();
+			if (m_bLooped)
+			{
+				curWaypoint = m_WayPoints.begin();
+			}
 		}
 	}
-}
+
+	bool Finished();
+};
+
