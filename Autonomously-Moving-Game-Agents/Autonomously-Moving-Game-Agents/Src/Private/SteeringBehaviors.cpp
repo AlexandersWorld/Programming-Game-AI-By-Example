@@ -420,3 +420,90 @@ SVector2D SteeringBehaviors::OffsetPursuit(const Vehicle* leader, const SVector2
     //now arrive at the predicted future position of the offset
     return Arrive(WorldOffsetPos + leader->Velocity() * LookAheadTime, EDeceleration::Fast);
 }
+
+SVector2D SteeringBehaviors::Separation(const std::vector<Vehicle*>& neighbors)
+{
+    SVector2D SteeringForce;
+
+    for (int a = 0; a < neighbors.size(); ++a)
+    {
+        //make sure this  agent isn't included in the calculations and that
+        //the agent being examined is close enough.
+        if ((neighbors[a] != m_pVehicle) && neighbors[a]->IsTagged())
+        {
+            SVector2D ToAgent = m_pVehicle->Pos() - neighbors[a]->Pos();
+
+            //scale the force inversely proportional to the  agent's   distance
+            //from its neighbor.
+            SteeringForce += SVector2D::Normalize(ToAgent) / ToAgent.Length();
+        }
+    }
+
+    return SteeringForce;
+}
+
+SVector2D SteeringBehaviors::Alignment(const std::vector<Vehicle*>& neighbors)
+{
+    //used to record the avarage heading of the neighbors
+    SVector2D AverageHeading;
+
+    //used to count the number of vehicles in the neighborhood
+    int NeighborCount = 0;
+
+    //iterate through all the tagged vehicles and sum their heading vectors
+    for (int a = 0; neighbors.size(); ++a)
+    {
+        //make sure *this* agent isn't included in the calculations and that
+        //the agent being examined is close enough
+        if ((neighbors[a] != m_pVehicle) && neighbors[a]->IsTagged())
+        {
+            AverageHeading += neighbors[a]->Heading();
+
+            ++NeighborCount;
+        }
+    }
+
+    //if the neighborhood contained one or more vehicles, average their
+    //heading vectors.
+    if (NeighborCount > 0)
+    {
+        AverageHeading /= (double)NeighborCount;
+
+        AverageHeading -= m_pVehicle->Heading();
+    }
+
+    return AverageHeading;
+}
+
+SVector2D SteeringBehaviors::Cohesion(const std::vector<Vehicle*>& neighbors)
+{
+    //first find the center of mass of all the agents
+    SVector2D CenterOfMass, SteeringForce;
+
+    int NeighborCount = 0;
+
+    //iterate through the neighbors and sum up all the position vectors
+    for (int a = 0; neighbors.size(); ++a)
+    {
+        //make sure *this* agent isn't included in  the calculations and that
+        //the agent being examined is a neighbor
+        if ((neighbors[a] != m_pVehicle) && neighbors[a]->IsTagged())
+        {
+            CenterOfMass += neighbors[a]->Pos();
+
+            ++NeighborCount;
+        }
+
+    }
+
+    if (NeighborCount > 0)
+    {
+        //the  center of mass is the average of the  sum of positions
+        CenterOfMass =  CenterOfMass / (double)NeighborCount;
+
+        //now seek toward that position
+        SteeringForce = Seek(CenterOfMass);
+    }
+
+    return SteeringForce();
+}

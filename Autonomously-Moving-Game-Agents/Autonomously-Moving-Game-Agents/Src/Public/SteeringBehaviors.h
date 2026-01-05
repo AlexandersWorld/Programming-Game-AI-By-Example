@@ -71,4 +71,10 @@ protected:
     SVector2D FollowPath();
 
     SVector2D OffsetPursuit(const Vehicle* leader, const SVector2D offset);
+
+    SVector2D Separation(const std::vector<Vehicle*>& neighbors);
+
+    SVector2D Alignment(const std::vector<Vehicle*>& neighbors);
+
+    SVector2D Cohesion(const std::vector<Vehicle*>& neighbors);
 };
