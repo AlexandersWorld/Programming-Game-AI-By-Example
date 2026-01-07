@@ -19,9 +19,11 @@ private:
     double m_dWanderJitter;
     double m_dDBoxLength;
     double MaxDouble;
+    double m_dMultWallAvoidance;
     Path* m_pPath;
     std::vector<Wall2D> m_Feelers;
     SVector2D m_vWanderTarget;
+    SVector2D m_vSteeringForce;
 
     mutable std::mt19937 m_RNG;
     mutable std::uniform_real_distribution<double> m_Distribution;
@@ -77,4 +79,8 @@ protected:
     SVector2D Alignment(const std::vector<Vehicle*>& neighbors);
 
     SVector2D Cohesion(const std::vector<Vehicle*>& neighbors);
+
+    SVector2D Calculate();
+
+    bool AccumulateForce(SVector2D& RunningTot, SVector2D ForceToAdd);
 };

@@ -10,9 +10,9 @@ private:
     // All vehicles in the world
     std::vector<Vehicle*> m_Vehicles;
 
-    // You can add walls, obstacles, paths later
-    // std::vector<Wall> m_Walls;
-    // std::vector<BaseGameEntity*> m_Obstacles;
+    You can add walls, obstacles, paths later
+    std::vector<Wall> m_Walls;
+    std::vector<BaseGameEntity*> m_Obstacles;
 
 public:
     GameWorld();
