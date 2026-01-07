@@ -21,6 +21,7 @@ public:
     
     double MaxSpeed() { return m_dMaxSpeed; }
     double Speed() { return m_dSPeed; }
+    double MaxForce() { return m_dMaxForce; }
 
 
     virtual void Update(double time_elapsed) override;

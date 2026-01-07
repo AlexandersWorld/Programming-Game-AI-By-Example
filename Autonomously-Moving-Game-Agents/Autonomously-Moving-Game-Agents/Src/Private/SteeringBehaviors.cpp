@@ -507,3 +507,58 @@ SVector2D SteeringBehaviors::Cohesion(const std::vector<Vehicle*>& neighbors)
 
     return SteeringForce();
 }
+
+bool SteeringBehaviors::AccumulateForce(SVector2D& RunningTot, SVector2D ForceToAdd)
+{
+    //calculate how much steering force the vehicle has used so far
+    double MagnitudeSoFar = RunningTot.Length();
+
+    //calculate how much steering force remains to be used by this vehicle
+    double MagnitudeRemaining = m_pVehicle->MaxForce() - MagnitudeSoFar;
+
+    //return false if there is no more force left to use
+    if (MagnitudeRemaining <= 0.0) return false;
+
+    //calculate the magnitude of the force we want to add
+    double MagnitudeToAdd = ForceToAdd.Length();
+
+    //if the magnitude of the sum of ForceToAdd and the running total
+    //does not exceed the maximum force available to this vehicle, just
+    //add together. Otherwise add as much of the ForceToAdd vector as
+    //possible without going over the max.
+    if (MagnitudeToAdd < MagnitudeRemaining)
+    {
+        RunningTot += ForceToAdd;
+    }
+    else
+    {
+        //add it to the steering force
+        RunningTot += (SVector2D::Normalize(ForceToAdd) * MagnitudeRemaining);
+    }
+
+    return true;
+}
+
+SVector2D SteeringBehaviors::Calculate()
+{
+    //reset the force.
+    m_vSteeringForce.Zero();
+
+    SVector2D force;
+
+    if (On(wall_avoidance))
+    {
+        force = WallAvoidance(m_pVehicle->World()->Walls) * m_dMultWallAvoidance;
+
+        if (!AccumulateForce(m_vSteeringForce, force)) return m_vSteeringForce;
+    }
+
+    if (On(obstacle_avoidance))
+    {
+        force = Separation(m_pVehicle->World()->Agents()) * m_dMultSeparation;
+
+        if (!AccumulateForce(m_vSteeringForce, force)) return m_vSteeringForce;
+    }
+
+    return m_vSteeringForce;
+}
