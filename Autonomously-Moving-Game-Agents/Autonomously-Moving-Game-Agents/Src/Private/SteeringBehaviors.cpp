@@ -562,3 +562,48 @@ SVector2D SteeringBehaviors::Calculate()
 
     return m_vSteeringForce;
 }
+
+SVector2D SteeringBehaviors::CalculateDithered()
+{
+    //reset the steering force
+    m_vSterringForrce.Zero();
+
+    //the behavior probalities
+    const double prWallAvoidance = 0.9;
+    const double prObstacleAvoidance = 0.9;
+    const double prSeparation = 0.8;
+    const double prAlignment = 0.5;
+    const double prCohesion = 0.5;
+    const double prWander = 0.8;
+
+    if (On(wall_avoidance) && RandFloat() > prWallAvoidance)
+    {
+        m_vSteeringForce = WallAvoidance(m_pVehicle->World()->Walls()) * m_dWeightWallAvoidance / prWallAvoidance;
+
+        if (!m_vSteeringForce.IsZero())
+        {
+            m_vSteeringForce.Trancate(m_pVehicle->MaxForce());
+            return m_vSteeringForce;
+        }
+    }
+
+    if (On(obstacle_avoidance) && RangdFloat() > prObstacleAvoidance)
+    {
+        if (!m_vSteeringForce.IsZero())
+        {
+            m_vSteeringForce += ObstacleAvoidance(m_pVehicle->World()->Obstacles()) * m_dWeightAvoidance / prObstacleAvoidance;
+
+            return m_vSteeringForce;
+        }
+    }
+
+    if (On(separation) && RandFloat()->prSeparation)
+    {
+        if (!m_vSteeringForce.IsZero())
+        {
+            m_vSteeringForce.Truncate(m_pVehicle->MaxForce());
+            return m_vSteeringForce;
+        }
+
+    }
+}

@@ -82,5 +82,7 @@ protected:
 
     SVector2D Calculate();
 
+    SVector2D CalculateDithered();
+
     bool AccumulateForce(SVector2D& RunningTot, SVector2D ForceToAdd);
 };
