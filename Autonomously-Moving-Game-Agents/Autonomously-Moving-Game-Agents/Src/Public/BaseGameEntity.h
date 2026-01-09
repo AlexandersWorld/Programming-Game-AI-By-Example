@@ -3,12 +3,7 @@
 #include <vector>
 #include <string>
 #include <iosfwd>
-
-
-struct Vector2D
-{
-	float x,y;
-};
+#include "Vector2D.h"
 
 class BaseGameEntity
 {
@@ -27,7 +22,7 @@ private:
 
 	bool        m_bTag;
 
-	Vector2D    m_vPos;
+	SVector2D    m_vPos;
 
 	double      m_dScale;
 
@@ -52,8 +47,8 @@ public:
 	virtual void  Write(std::ostream& os)const {}
 	virtual void  Read(std::ifstream& is) {}
 
-	Vector2D      Pos()const { return m_vPos; }
-	void          SetPos(Vector2D new_pos) { m_vPos = new_pos; }
+	SVector2D      Pos()const { return m_vPos; }
+	void          SetPos(SVector2D new_pos) { m_vPos = new_pos; }
 
 	double        BRadius()const { return m_dBoundingRadius; }
 	void          SetBRadius(double r) { m_dBoundingRadius = r; }
