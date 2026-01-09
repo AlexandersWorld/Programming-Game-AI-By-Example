@@ -19,7 +19,8 @@ private:
     double m_dWanderJitter;
     double m_dDBoxLength;
     double MaxDouble;
-    double m_dMultWallAvoidance;
+    double m_dMultWallAvoidance = 2.0;
+    double m_dWeightObstacleAvoidance = 5.0;
     Path* m_pPath;
     std::vector<Wall2D> m_Feelers;
     SVector2D m_vWanderTarget;
@@ -83,6 +84,8 @@ protected:
     SVector2D Calculate();
 
     SVector2D CalculateDithered();
+
+    float RandFloat();
 
     bool AccumulateForce(SVector2D& RunningTot, SVector2D ForceToAdd);
 };

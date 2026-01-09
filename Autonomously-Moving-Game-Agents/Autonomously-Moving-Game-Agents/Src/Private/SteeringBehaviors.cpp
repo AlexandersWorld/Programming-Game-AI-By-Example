@@ -1,5 +1,7 @@
 #include <vector>
 #include <iostream>
+#include <random>
+#include <iomanip>
 #include <cmath>
 #include "Path.h"
 #include "SteeringBehaviors.h"
@@ -12,6 +14,18 @@
 SteeringBehaviors::SteeringBehaviors(Vehicle* Owner)
     : m_pVehicle(Owner)
 {
+}
+
+float SteeringBehaviors::RandFloat() {
+    // Use a static random device to seed the engine once
+    static std::random_device rd;
+    // Use a static Mersenne Twister engine for high quality pseudo-random numbers
+    static std::mt19937 engine(rd());
+    // Define a uniform real distribution for the desired range [min, max)
+    std::uniform_real_distribution<float> dist(0, m_pVehicle->MaxSpeed());
+
+    // Generate and return the random float
+    return dist(engine);
 }
 
 SteeringBehaviors::SteeringBehaviors()
@@ -597,13 +611,36 @@ SVector2D SteeringBehaviors::CalculateDithered()
         }
     }
 
-    if (On(separation) && RandFloat()->prSeparation)
+    if (On(separation) && RandFloat()  > prSeparation)
     {
         if (!m_vSteeringForce.IsZero())
         {
             m_vSteeringForce.Truncate(m_pVehicle->MaxForce());
             return m_vSteeringForce;
         }
+    }
 
+    if (On(obstacle_avoidance) && RandFloat() > prObstacleAvoidance)
+    {
+        m_vSteeringForce += ObstacleAvoidance(m_pVehicle->World()->Obstacles()) * m_dWeightObstacleAvoidance / prObstacleAvoidance;
+
+        if (!m_SteeringForce.IsZero())
+        {
+            m_vSteeringForce.Truncate(m_pVehicle->MaxForce());
+
+            return m_vSteeringForce;
+        }
+    }
+
+    if (On(separation) && RandFloat()->prSeparation)
+    {
+        m_vSteeringForce += Separation(m_pVehicle->World()->Agents()) * m_dWeightObstacleAvoidance / prSeparation;
+
+        if (!m_SteeringForce.IsZero())
+        {
+            m_vSteeringForce.Truncate(m_pVehicle->MaxForce());
+
+            return m_vSteeringForce;
+        }
     }
 }
