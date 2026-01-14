@@ -123,7 +123,29 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FieldPlayer.cpp" />
+    <ClCompile Include="Goal.cpp" />
+    <ClCompile Include="GoalKeeper.cpp" />
+    <ClCompile Include="MovingEntity.cpp" />
+    <ClCompile Include="PlayerBase.cpp" />
+    <ClCompile Include="SoccerBall.cpp" />
+    <ClCompile Include="SoccerPitch.cpp" />
+    <ClCompile Include="SoccerTeam.cpp" />
     <ClCompile Include="Sports Simulation - Simple Soccer.cpp" />
+    <ClCompile Include="StateMachine.cpp" />
+    <ClCompile Include="Vector2D.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FieldPlayer.h" />
+    <ClInclude Include="Goal.h" />
+    <ClInclude Include="GoalKeeper.h" />
+    <ClInclude Include="MovingEntity.h" />
+    <ClInclude Include="PlayerBase.h" />
+    <ClInclude Include="SoccerBall.h" />
+    <ClInclude Include="SoccerPitch.h" />
+    <ClInclude Include="SoccerTeam.h" />
+    <ClInclude Include="State.h" />
+    <ClInclude Include="StateMachine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
