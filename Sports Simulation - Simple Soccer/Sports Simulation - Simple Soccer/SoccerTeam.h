@@ -15,7 +15,7 @@ public:
 	
 protected:
 	bool CanShoot(Vector2D from, Vector2D to, Vector2D heading, double power);
-	void RequestPass(PlayerBase* playerbase);
+	void RequestPass(PlayerBase* player);
 
 private:
 	std::vector<PlayerBase*> m_pPlayers;
