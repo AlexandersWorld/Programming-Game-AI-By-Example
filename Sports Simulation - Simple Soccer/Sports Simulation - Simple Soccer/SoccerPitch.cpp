@@ -21,8 +21,6 @@ void SoccerPitch::Update()
 {
 }
 
-
-
 void SoccerPitch::Render()
 {
 }
