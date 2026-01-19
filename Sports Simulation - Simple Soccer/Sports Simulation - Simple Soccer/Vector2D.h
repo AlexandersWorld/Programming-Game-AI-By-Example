@@ -24,6 +24,11 @@ struct Vector2D
         return { x * scalar, y * scalar };
     }
 
+    Vector2D operator/(double scalar) const
+    {
+        return { x / scalar, y / scalar };
+    }
+
     double Length() const
     {
         return std::sqrt(x * x + y * y);
@@ -34,4 +39,10 @@ struct Vector2D
         double len = Length();
         return (len > 0) ? Vector2D(x / len, y / len) : Vector2D();
     }
+
+    Vector2D Perp() const
+    {
+        return Vector2D(-y, x);
+    }
+
 };
