@@ -40,6 +40,11 @@ struct Vector2D
         return (len > 0) ? Vector2D(x / len, y / len) : Vector2D();
     }
 
+    void Zero()
+    {
+        x = 0;  y = 0;
+    }
+
     Vector2D Perp() const
     {
         return Vector2D(-y, x);
