@@ -58,5 +58,6 @@ protected:
 	void Kick(Vector2D direction, double force);
 	Vector2D FuturePosition(double time);
 	void Trap();
+	Vector2D Pos() const;
 	double TimeToCoverDistance(Vector2D A, Vector2D B, double force);
 };
