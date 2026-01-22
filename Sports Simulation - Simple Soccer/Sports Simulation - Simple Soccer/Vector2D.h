@@ -45,6 +45,14 @@ struct Vector2D
         x = 0;  y = 0;
     }
 
+    static double Distance(const Vector2D& A, const Vector2D& B)
+    {
+        double dx = B.x - A.x;
+        double dy = B.y - A.y;
+
+        return std::sqrt(dx * dx + dy * dy);
+    }
+
     Vector2D Perp() const
     {
         return Vector2D(-y, x);

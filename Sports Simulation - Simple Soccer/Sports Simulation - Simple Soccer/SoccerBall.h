@@ -1,12 +1,12 @@
 #pragma once
 
 #include <vector>
-#include "Vector2D.h"
 #include "MovingEntity.h"
 
 class PlayerBase;
 class Wall2D;
 class Telegram;
+class Vector2D;
 
 class SoccerBall : public MovingEntity
 {
@@ -16,6 +16,8 @@ private:
 
 	//a pointer to the player (or goalkeeper) who possesses the ball
 	PlayerBase* m_pOwner;
+
+	double m_dMass = 10.f;
 
 	Vector2D m_vVelocity;
 

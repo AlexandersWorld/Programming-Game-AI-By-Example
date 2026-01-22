@@ -1,4 +1,5 @@
 #include "SoccerBall.h"
+#include "Vector2D.h"
 #include "Params.h"
 
 void SoccerBall::TestCollisionWithWalls(const std::vector<Wall2D>& walls)
@@ -57,5 +58,26 @@ Vector2D SoccerBall::Pos() const
 
 double SoccerBall::TimeToCoverDistance(Vector2D A, Vector2D B, double force)
 {
-	return 0.0;
+	//this will be the velocity of the ball in the bext time step *if*
+	//the player was to make the pass.
+	double speed = force / m_dMass;
+
+	//calculate the velocity at B using the equation
+	// v^2 = u^2 + 2ax
+
+	//first calculate s (the distance between the two positions)
+	double DistanceToCover = Vector2D::Distance(A, B);
+
+	double term = speed * speed + 2.0 * DistanceToCover * Prm.Friction;
+
+	//if (u^2 + 2ax) is negative it means the ball cannot reach point B.
+	if (term <= 0) return 1.0f;
+
+	double v = sqrt(term);
+
+	//it's possible for the ball to reach B and we know its speed when it
+	//gets there, so now it's easy to calculate the time using the equation
+
+	//t = v - u / a
+	return (v - speed) / Prm.Friction;
 }
