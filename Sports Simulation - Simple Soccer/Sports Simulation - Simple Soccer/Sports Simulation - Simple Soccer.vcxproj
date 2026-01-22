@@ -127,7 +127,9 @@
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="GoalKeeper.cpp" />
     <ClCompile Include="MovingEntity.cpp" />
+    <ClCompile Include="Params.cpp" />
     <ClCompile Include="PlayerBase.cpp" />
+    <ClCompile Include="Params.h" />
     <ClCompile Include="SoccerBall.cpp" />
     <ClCompile Include="SoccerPitch.cpp" />
     <ClCompile Include="SoccerTeam.cpp" />
