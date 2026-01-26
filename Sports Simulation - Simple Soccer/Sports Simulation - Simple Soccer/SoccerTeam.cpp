@@ -24,36 +24,40 @@ void SoccerTeam::InControl()
 
 PlayerBase* SoccerTeam::Receiver()
 {
-	return nullptr;
+	return m_pReceivingPlayer;
 }
 
-void SoccerTeam::SetReceiver()
+void SoccerTeam::SetReceiver(PlayerBase* Receiver)
 {
+	m_pReceivingPlayer = Receiver;
 }
 
 PlayerBase* SoccerTeam::SupportingPlayer()
 {
-	return nullptr;
+	return m_pSupportingPlayer;
 }
 
-void SoccerTeam::SetSupportingPlayer()
+void SoccerTeam::SetSupportingPlayer(PlayerBase* SupportingPlayer)
 {
+	m_pSupportingPlayer = SupportingPlayer;
 }
 
 PlayerBase* SoccerTeam::ControllingPlayer()
 {
-	return nullptr;
+	return m_pControllingPlayer;
 }
 
-void SoccerTeam::SetControllingPlayer()
+void SoccerTeam::SetControllingPlayer(PlayerBase* ControllingPlayer)
 {
+	m_pControllingPlayer = ControllingPlayer;
 }
 
 PlayerBase* SoccerTeam::PlayerClosestToBall()
 {
-	return nullptr;
+	return m_pPlayerClosestToBall;
 }
 
-void SoccerTeam::SetPlayerClosestBall()
+void SoccerTeam::SetPlayerClosestBall(PlayerBase* PlayerClosestToBall)
 {
+	m_pPlayerClosestToBall = PlayerClosestToBall;
 }

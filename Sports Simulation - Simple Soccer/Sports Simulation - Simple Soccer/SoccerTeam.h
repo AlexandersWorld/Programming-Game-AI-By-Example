@@ -20,15 +20,20 @@ protected:
 	Vector2D GetSupportSpot();
 	void InControl();
 	PlayerBase* Receiver();
-	void SetReceiver();
+	void SetReceiver(PlayerBase* Receiver);
 	PlayerBase* SupportingPlayer();
-	void SetSupportingPlayer();
+	void SetSupportingPlayer(PlayerBase* SupportingPlayer);
 	PlayerBase* ControllingPlayer();
-	void SetControllingPlayer();
+	void SetControllingPlayer(PlayerBase* ControllingPlayer);
 	PlayerBase* PlayerClosestToBall();
-	void SetPlayerClosestBall();
+	void SetPlayerClosestBall(PlayerBase* PlayerClosestToBall);
 
 private:
 	std::vector<PlayerBase*> m_pPlayers;
 	StateMachine<SoccerTeam*> m_pStateMachine;
+
+	PlayerBase* m_pReceivingPlayer;
+	PlayerBase* m_pPlayerClosestToBall;
+	PlayerBase* m_pControllingPlayer;
+	PlayerBase* m_pSupportingPlayer;
 };

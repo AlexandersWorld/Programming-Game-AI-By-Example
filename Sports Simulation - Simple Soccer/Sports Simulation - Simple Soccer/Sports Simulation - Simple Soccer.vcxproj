@@ -135,6 +135,7 @@
     <ClCompile Include="SoccerTeam.cpp" />
     <ClCompile Include="Sports Simulation - Simple Soccer.cpp" />
     <ClCompile Include="StateMachine.cpp" />
+    <ClCompile Include="SteeringBehaviors.cpp" />
     <ClCompile Include="Vector2D.h" />
   </ItemGroup>
   <ItemGroup>
@@ -149,6 +150,7 @@
     <ClInclude Include="SoccerTeam.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateMachine.h" />
+    <ClInclude Include="SteeringBehaviors.h" />
     <ClInclude Include="Wall2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
