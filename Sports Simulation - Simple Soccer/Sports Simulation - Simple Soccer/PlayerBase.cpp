@@ -4,6 +4,11 @@ PlayerBase::PlayerBase()
 {
 }
 
+Vector2D PlayerBase::Pos()
+{
+	return m_vPos;
+}
+
 bool PlayerBase::CanPassForward(Vector2D receiver, Vector2D target, float power)
 {
 	return false;

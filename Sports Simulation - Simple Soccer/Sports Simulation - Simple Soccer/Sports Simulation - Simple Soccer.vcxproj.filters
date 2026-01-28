@@ -98,5 +98,8 @@
     <ClInclude Include="SteeringBehaviors.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SupportSpot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
