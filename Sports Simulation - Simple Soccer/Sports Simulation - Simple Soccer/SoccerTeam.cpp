@@ -61,3 +61,8 @@ void SoccerTeam::SetPlayerClosestBall(PlayerBase* PlayerClosestToBall)
 {
 	m_pPlayerClosestToBall = PlayerClosestToBall;
 }
+
+bool SoccerTeam::isPassSafeFromAllOpponents(Vector2D PlayerPos, Vector2D Pos, Vector2D x, double MaxPassingForcew)
+{
+	return false;
+}

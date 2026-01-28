@@ -10,6 +10,8 @@ class PlayerBase : public MovingEntity
 public:
 	PlayerBase();
 
+	Vector2D Pos();
+
 protected:
 	bool CanPassForward(Vector2D receiver, Vector2D target, float power);
 	bool CanPassBackward(Vector2D receiver, Vector2D target, float power);
@@ -31,4 +33,5 @@ private:
 	SteeringBehaviors* m_pSteering;
 	SoccerTeam* m_pTeam;
 	int m_iHomeRegion;
+	Vector2D m_vPos;
 };

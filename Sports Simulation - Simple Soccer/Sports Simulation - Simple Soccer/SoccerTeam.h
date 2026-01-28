@@ -14,7 +14,7 @@ public:
 	void Update();
 	void Render();
 	
-protected:
+public:
 	bool CanShoot(Vector2D from, Vector2D to, Vector2D heading, double power);
 	void RequestPass(PlayerBase* player);
 	Vector2D GetSupportSpot();
@@ -27,6 +27,7 @@ protected:
 	void SetControllingPlayer(PlayerBase* ControllingPlayer);
 	PlayerBase* PlayerClosestToBall();
 	void SetPlayerClosestBall(PlayerBase* PlayerClosestToBall);
+	bool isPassSafeFromAllOpponents(Vector2D PlayerPos, Vector2D Pos, Vector2D x, double MaxPassingForcew);
 
 private:
 	std::vector<PlayerBase*> m_pPlayers;
