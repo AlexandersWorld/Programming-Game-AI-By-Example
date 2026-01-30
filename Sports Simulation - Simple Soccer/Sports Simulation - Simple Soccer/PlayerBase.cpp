@@ -44,6 +44,11 @@ bool PlayerBase::AtTarget()
 	return false;
 }
 
+bool PlayerBase::AtHomeRegion() const
+{
+	return m_pHomeRegion->Inside(Pos());
+}
+
 bool PlayerBase::IsControllingPlayer()
 {
 	return false;
