@@ -7,6 +7,7 @@ class SupportSpot
 public:
 	Vector2D Pos() const { return m_vPos; }
 	void SetScore(double indScore) { m_dScore = indScore; }
+	double GetScore()  const { return m_dScore; }
 
 private:
 	Vector2D m_vPos;

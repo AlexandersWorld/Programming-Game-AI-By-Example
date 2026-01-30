@@ -28,6 +28,7 @@ protected:
 	bool IsControllingPlayer();
 	bool WhithinShootingRange();
 	bool AtTarget();
+	bool AtHomeRegion() const;
 
 private:
 	SteeringBehaviors* m_pSteering;

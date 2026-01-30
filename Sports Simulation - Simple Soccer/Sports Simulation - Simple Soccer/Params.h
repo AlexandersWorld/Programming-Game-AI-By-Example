@@ -8,6 +8,11 @@ struct Params
     double Spot_CanPassScore;
     double Spot_CanScoreFromPositionScore;
     double Spot_DistFromControllingPlayerScore;
+    double MaxPassingForce;
+    double Spot_PassSafeStrength;
+    double MaxShootingForce;
+    double Spot_CanScoreStrength;
+    double Spot_DistFromControllingPlayerStrength;
 
     // timing
     double TimeStep;
@@ -22,6 +27,11 @@ struct Params
         Spot_CanPassScore = 2.0;
         Spot_CanScoreFromPositionScore = 1.0;
         Spot_DistFromControllingPlayerScore = 200.0;
+        MaxPassingForce = 30.0;
+        Spot_PassSafeStrength = 10;
+        MaxShootingForce = 50.0;
+        Spot_CanScoreStrength = 20.0;
+        Spot_DistFromControllingPlayerStrength = 40.0;
     }
 };
 

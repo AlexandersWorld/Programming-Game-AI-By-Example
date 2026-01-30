@@ -4,6 +4,7 @@
 
 class SupportSpot;
 class SoccerTeam;
+class  Regulator;
 
 class SupportSpotCalculator
 {
@@ -19,5 +20,7 @@ private:
 	std::vector<SupportSpot> m_Spots;
 
 	SoccerTeam* m_pTeam;
+
+	Regulator* m_pRegulator;
 
 };
