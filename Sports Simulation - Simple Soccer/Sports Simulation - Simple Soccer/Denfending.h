@@ -14,22 +14,9 @@ public:
         return &instance;
     }
 
-    void Enter(SoccerTeam* team) override
-    {
-        team->ReturnAllFieldPlayersToHome();
-    }
+    void Enter(SoccerTeam* team) override;
 
-    void Execute(SoccerTeam* team) override
-    {
-        // If we gain control, switch to attacking
-        if (team->ControllingPlayer())
-        {
-            team->GetFSM()->ChangeState(Attacking::Instance());
-        }
-    }
+    void Execute(SoccerTeam* team) override;
 
-    void Exit(SoccerTeam* team) override
-    {
-        // Cleanup if needed
-    }
+    void Exit(SoccerTeam* team) override;
 };

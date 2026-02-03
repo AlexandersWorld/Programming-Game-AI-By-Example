@@ -123,6 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Attacking.h" />
     <ClCompile Include="FieldPlayer.cpp" />
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="GoalKeeper.cpp" />
@@ -142,6 +143,7 @@
     <ClCompile Include="Vector2D.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Denfending.h" />
     <ClInclude Include="FieldPlayer.h" />
     <ClInclude Include="Goal.h" />
     <ClInclude Include="GoalKeeper.h" />
@@ -158,6 +160,7 @@
     <ClInclude Include="SteeringBehaviors.h" />
     <ClInclude Include="SupportSpot.h" />
     <ClInclude Include="SupportSpotCalculator.h" />
+    <ClInclude Include="TeamState.h" />
     <ClInclude Include="Wall2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
