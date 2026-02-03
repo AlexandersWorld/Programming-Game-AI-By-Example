@@ -13,6 +13,7 @@ struct Params
     double MaxShootingForce;
     double Spot_CanScoreStrength;
     double Spot_DistFromControllingPlayerStrength;
+    int TeamSize;
 
     // timing
     double TimeStep;
@@ -32,6 +33,7 @@ struct Params
         MaxShootingForce = 50.0;
         Spot_CanScoreStrength = 20.0;
         Spot_DistFromControllingPlayerStrength = 40.0;
+        TeamSize = 5;
     }
 };
 

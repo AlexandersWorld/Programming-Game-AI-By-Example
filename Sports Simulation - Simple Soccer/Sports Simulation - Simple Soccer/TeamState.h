@@ -3,6 +3,6 @@
 #include "State.h"
 #include "SoccerTeam.h"
 
-class TeamState : public State<SoccerTeam*>
+class TeamState : public State<SoccerTeam>
 {
 };
