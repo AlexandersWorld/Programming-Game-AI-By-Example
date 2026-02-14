@@ -124,6 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Attacking.h" />
+    <ClCompile Include="Denfending.cpp" />
     <ClCompile Include="FieldPlayer.cpp" />
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="GoalKeeper.cpp" />

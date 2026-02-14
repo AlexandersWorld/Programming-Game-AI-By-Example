@@ -9,7 +9,7 @@ void Defending::Enter(SoccerTeam* team)
 	const int RedRegions[TeamSize] = { 16,9,11,12,14 };
 
 	//set up the player's home regions
-	if (team->Color() == SoccerTeam::blue)
+	if (team->Color() == SoccerTeam::Blue)
 	{
 		ChangePlayerHomeRegions(team, BlueRegions);
 	}
